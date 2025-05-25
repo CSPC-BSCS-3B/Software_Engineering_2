@@ -360,6 +360,18 @@ h2 {
   outline: none;
   background: transparent;
 }
+
+/* Specific styling for date inputs to ensure white text */
+.login-box .user-box input[type="date"] {
+  color: #fff;
+}
+
+/* Change date picker calendar icon color */
+.login-box .user-box input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* Makes the calendar icon white */
+  cursor: pointer;
+}
+
 .login-box .user-box select {
   width: 100%;
   padding: 10px 0;
