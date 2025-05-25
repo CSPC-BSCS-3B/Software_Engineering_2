@@ -14,6 +14,8 @@
                     <div class="flash">{{ message }}</div>
                     {% endfor %}
                     <div class="form-scroll-container">
+                        <!-- Profile Information Section -->
+                        <h3 class="section-title">Profile Information</h3>
                         <div class="user-box">
                             <input name="username" type="text"
                                 value="{{ user['username'] or request.form['username'] }}">
@@ -45,17 +47,16 @@
                                 value="{{ user['email'] or request.form['email'] }}">
                             <label>Email</label>
                         </div>
+                        
+                        <!-- Authentication Section - For confirmation only -->
+                        <h3 class="section-title">Authentication</h3>
+                        <p class="auth-note">Please enter your current password to confirm changes</p>
                         <div class="user-box">
-                            <input name="password" type="password" placeholder="Password">
-                            <label>Password</label>
-                        </div>
-                        <div class="user-box">
-                            <input name="confirm_password" type="password"
-                                placeholder="Confirm Password">
-                            <label>Confirm Password</label>
+                            <input name="current_password" type="password" placeholder="Current Password" required>
+                            <label>Current Password</label>
                         </div>
                     </div>
-                    <button type="submit">Submit</button>
+                    <button type="submit">Update Profile</button>
                 </div>
             </form>
         </div>

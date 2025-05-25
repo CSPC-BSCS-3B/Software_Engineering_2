@@ -382,7 +382,7 @@ h2 {
   left: 0;
   padding: 10px 0;
   font-size: 16px;
-  color: #fff;
+  color: rgba(3, 233, 244, 0.7); /* Lower opacity cyan color */
   pointer-events: none;
   transition: 0.5s;
 }
@@ -711,4 +711,20 @@ button.ghost {
 
 .form-scroll-container::-webkit-scrollbar-thumb:hover {
   background-color: #6484d5;
+}
+
+/* Profile form section titles */
+.section-title {
+  color: #5c73b0;
+  margin: 10px 0;
+  font-size: 18px;
+  border-bottom: 1px solid #334266;
+  padding-bottom: 8px;
+}
+
+.auth-note {
+  color: #a2aacd;
+  font-size: 0.8rem;
+  margin-bottom: 20px;
+  font-style: italic;
 }

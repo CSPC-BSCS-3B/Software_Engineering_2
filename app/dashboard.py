@@ -48,8 +48,7 @@ def update_profile(id):
         no_middle_name = "no_middle_name" in request.form
         last_name = request.form["last_name"]
         email = request.form["email"]
-        password = request.form["password"]
-        confirm_password = request.form["confirm_password"]
+        current_password = request.form["current_password"]
         error = None
 
         if not username:
@@ -62,10 +61,13 @@ def update_profile(id):
             error = "I thought you have no middle name?"
         elif not last_name:
             error = "Last Name is required"
-        elif not password or not confirm_password:
-            error = "Password and Confirmation are required."
-        elif password != confirm_password:
-            error = "Passwords doesn't match."
+        elif not current_password:
+            error = "Current password is required to update profile."
+        
+        # Verify password
+        from werkzeug.security import check_password_hash
+        if not check_password_hash(user["password"], current_password):
+            error = "Incorrect password."
 
         if error is not None:
             flash(error)
@@ -73,6 +75,7 @@ def update_profile(id):
             try:
                 db = get_db()
                 db.execute("BEGIN TRANSACTION")
+                # Update names table
                 db.execute(
                     "UPDATE names SET first_name = ?, middle_name = ?, no_middle_name = ?, last_name = ?"
                     " WHERE id = ?",
@@ -84,14 +87,17 @@ def update_profile(id):
                         user["name_id"],
                     ),
                 )
+                # Update user table - only username and email, not password
                 db.execute(
-                    "UPDATE users SET username = ?, email = ?, password = ?"
+                    "UPDATE users SET username = ?, email = ?"
                     " WHERE id = ?",
-                    (username, email, password, id),
+                    (username, email, id),
                 )
                 db.commit()
-            except:
+                flash("Profile updated successfully!")
+            except Exception as e:
                 db.rollback()
+                flash(f"An error occurred: {str(e)}")
             else:
                 return redirect(url_for("dashboard.index"))
 
