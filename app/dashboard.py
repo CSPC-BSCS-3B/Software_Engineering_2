@@ -95,11 +95,17 @@ def update_profile(id):
                 )
                 db.commit()
                 flash("Profile updated successfully!")
+                
+                # Reload updated user data from database
+                user = get_user(id)
+                name = db.execute(
+                    "SELECT s.id, name_id, first_name, last_name FROM users s JOIN names n ON s.name_id = n.id WHERE s.id = ?",
+                    (g.user["id"],),
+                ).fetchone()
+                
             except Exception as e:
                 db.rollback()
                 flash(f"An error occurred: {str(e)}")
-            else:
-                return redirect(url_for("dashboard.index"))
 
     return render_template("dashboard/update_profile.html", user=user, name=name)
 
