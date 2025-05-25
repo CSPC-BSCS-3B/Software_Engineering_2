@@ -483,3 +483,41 @@ button.ghost {
   width: 100%; /* Make the paragraphs take the full width of the container */
   margin-bottom: 10px; /* Add space between paragraphs */
 }
+
+/* Scrollable budget container */
+.budget-container {
+  max-height: 250px;
+  overflow-y: auto;
+  border: 1px solid #334266;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.budget-container ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.budget-container li:first-of-type {
+  position: sticky;
+  top: 0;
+  background-color: #242e4c;
+  z-index: 1;
+  border-bottom: 1px solid #334266;
+  font-weight: bold;
+}
+
+.budget-container li {
+  display: flex;
+  justify-content: space-around;
+  font-size: 11px;
+  padding: 15px;
+  color: #eee;
+}
+
+.budget-container li span {
+  flex: 1;
+  text-align: center;
+}
