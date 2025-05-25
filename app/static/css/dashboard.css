@@ -250,12 +250,13 @@ h2 {
   padding: 10px;
   color: #424c7b;
 }
-.budgets li:nth-of-type(3) {
-  border-radius: 4px;
-  background: linear-gradient(to left, #242e4c, #34436f);
-  background-clip: border-box;
-  box-shadow: -10px 10px 5px rgba(0, 0, 0, 0.2);
-  border-left: solid 4px rgba(255, 255, 255, 0.08);
+.budgets li span {
+  flex: 1;
+  text-align: center;
+}
+.budgets li span a {
+  margin: 0 5px;
+  display: inline-block;
 }
 
 .grid {
