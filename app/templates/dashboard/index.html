@@ -42,22 +42,24 @@
                 <h4>All</h4>
             </a>
         </div>
-        <ul>
-            <li>
-                <span>Date</span>
-                <span>Type</span>
-                <span>Category</span>
-                <span>Amount</span>
-            </li>
-            {% for transaction in transactions %}
-            <li>
-                <span>{{ transaction['transaction_date'][0:10] }}</span>
-                <span>{{ transaction['transaction_type'] }}</span>
-                <span>{{ transaction['category_name'] }}</span>
-                <span>{{ transaction['amount'] }}</span>
-            </li>
-            {% endfor %}
-        </ul>
+        <div class="transaction-container">
+            <ul>
+                <li>
+                    <span>Date</span>
+                    <span>Type</span>
+                    <span>Category</span>
+                    <span>Amount</span>
+                </li>
+                {% for transaction in transactions %}
+                <li>
+                    <span>{{ transaction['transaction_date'][0:10] }}</span>
+                    <span>{{ transaction['transaction_type'] }}</span>
+                    <span>{{ transaction['category_name'] }}</span>
+                    <span>{{ transaction['amount'] }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     </section>
     <section class="bills">
         <div class="head">
