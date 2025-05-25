@@ -196,7 +196,7 @@ h2 {
   font-weight: bold;
 }
 .wallets .head .wallet-name option {
-  background-color: transparent; /* Transparent background to match the dark theme */
+  background-color: #242e4c; /* Dark background matching project theme */
   border: none; /* Light border color */
   appearance: none; /* Remove default browser styling */
   cursor: pointer; /* Cursor pointer on hover */
@@ -375,6 +375,21 @@ h2 {
   border-bottom: 1px solid #fff;
   outline: none;
   background: transparent;
+}
+
+.login-box .user-box select option {
+  background-color: #242e4c; /* Dark background matching project theme */
+  color: #fff; /* White text */
+  border: none;
+  padding: 10px;
+}
+
+.login-box .user-box select option:hover {
+  background-color: #334266; /* Slightly lighter on hover */
+}
+
+.login-box .user-box select option:checked {
+  background-color: #5c73b0; /* Blue accent when selected */
 }
 .login-box label {
   position: relative;
