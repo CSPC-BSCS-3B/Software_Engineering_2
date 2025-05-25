@@ -50,8 +50,7 @@
                     <line x1="21" y1="12" x2="9" y2="12"></line>
                 </svg>
             </a>
-        </div>
-        <script>
+        </div>        <script>
             function confirmLogout(event) {
                 event.preventDefault(); // Prevent immediate navigation
         
@@ -60,6 +59,24 @@
                     window.location.href = "{{ url_for('auth.logout') }}";
                 }
             }
+
+            // Auto-fade flash messages after 5 seconds
+            document.addEventListener("DOMContentLoaded", function() {
+                const flashMessages = document.querySelectorAll('.flash');
+                
+                flashMessages.forEach(function(flash) {
+                    setTimeout(function() {
+                        flash.classList.add('fade-out');
+                        
+                        // Remove the element completely after fade animation completes
+                        setTimeout(function() {
+                            if (flash.parentNode) {
+                                flash.parentNode.removeChild(flash);
+                            }
+                        }, 500); // Wait for fade animation to complete (0.5s)
+                    }, 5000); // Start fading after 5 seconds
+                });
+            });
         </script>
     </header>
     {% block main %}
