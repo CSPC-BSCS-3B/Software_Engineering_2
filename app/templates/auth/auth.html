@@ -9,43 +9,114 @@
 {% block body %}
 <div class="container {{ rap }}" id="container">
     <div class="form-container sign-up-container">
-        <form action="/auth/register" method="post">
+        <form action="/auth/register" method="post" id="registerForm" novalidate>
             <h1>Create Account</h1>
             {% if signup %}
-            {% for message in get_flashed_messages() %}
-            <div class="flash">{{ message }}</div>
+            {% for message in get_flashed_messages(with_categories=true) %}
+                {% if message[0] == 'success' %}
+                    <div class="flash success">{{ message[1] }}</div>
+                {% else %}
+                    <div class="flash">{{ message[1] if message[1] else message[0] }}</div>
+                {% endif %}
             {% endfor %}
             {% endif %}
-            <input name="username" type="text" placeholder="Username" required/>
-            <input name="first_name" type="text" placeholder="First Name" required/>
-            <input name="middle_name" type="text" placeholder="Middle Name" />
+            
+            <div class="input-group">
+                <input name="username" type="text" placeholder="Username" id="username" 
+                       pattern="^[a-zA-Z0-9_]{3,30}$" 
+                       title="Username must be 3-30 characters long and contain only letters, numbers, and underscores"
+                       autocomplete="username" required/>
+                <span class="error-message" id="username-error"></span>
+            </div>
+            
+            <div class="input-group">
+                <input name="first_name" type="text" placeholder="First Name" id="firstName" 
+                       pattern="^[a-zA-Z\s'-]{1,50}$"
+                       title="First name should contain only letters, spaces, hyphens, and apostrophes"
+                       autocomplete="given-name" required/>
+                <span class="error-message" id="firstName-error"></span>
+            </div>
+            
+            <div class="input-group">
+                <input name="middle_name" type="text" placeholder="Middle Name" id="middleName"
+                       pattern="^[a-zA-Z\s'-]{0,50}$"
+                       title="Middle name should contain only letters, spaces, hyphens, and apostrophes"
+                       autocomplete="additional-name"/>
+                <span class="error-message" id="middleName-error"></span>
+            </div>
+            
             <div class="cb">
                 <input id="cb" name="no_middle_name" type="checkbox" />
                 <label for="cb">No Legal Middle Name</label>
             </div>
-            <input name="last_name" type="text" placeholder="Last Name" required/>
-            <input name="email" type="email" placeholder="Email" required/>
-            <input name="password" type="password" placeholder="Password" required/>
-            <input name="confirm_password" type="password"
-                placeholder="Confirm Password" required/>
-            <button type="submit">Sign Up</button>
+            
+            <div class="input-group">
+                <input name="last_name" type="text" placeholder="Last Name" id="lastName"
+                       pattern="^[a-zA-Z\s'-]{1,50}$"
+                       title="Last name should contain only letters, spaces, hyphens, and apostrophes"
+                       autocomplete="family-name" required/>
+                <span class="error-message" id="lastName-error"></span>
+            </div>
+            
+            <div class="input-group">
+                <input name="email" type="email" placeholder="Email" id="email"
+                       autocomplete="email" required/>
+                <span class="error-message" id="email-error"></span>
+            </div>
+            
+            <div class="input-group">
+                <input name="password" type="password" placeholder="Password" id="password"
+                       autocomplete="new-password" required/>
+                <span class="error-message" id="password-error"></span>
+                <div class="password-requirements" id="passwordRequirements">
+                    <small>Password must contain:</small>
+                    <ul>
+                        <li id="length">• At least 8 characters</li>
+                        <li id="uppercase">• One uppercase letter</li>
+                        <li id="lowercase">• One lowercase letter</li>
+                        <li id="number">• One number</li>
+                        <li id="special">• One special character</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <input name="confirm_password" type="password" placeholder="Confirm Password" id="confirmPassword"
+                       autocomplete="new-password" required/>
+                <span class="error-message" id="confirmPassword-error"></span>
+            </div>
+            
+            <button type="submit" id="signUpSubmit" disabled>Sign Up</button>
         </form>
     </div>
     <div class="form-container sign-in-container">
-        <form action="/auth/login" method="post">
+        <form action="/auth/login" method="post" id="loginForm" novalidate>
             <h1>Sign in</h1>
             {% if login %}
-            {% for message in get_flashed_messages() %}
-            <div class="flash">{{ message }}</div>
+            {% for message in get_flashed_messages(with_categories=true) %}
+                {% if message[0] == 'success' %}
+                    <div class="flash success">{{ message[1] }}</div>
+                {% else %}
+                    <div class="flash">{{ message[1] if message[1] else message[0] }}</div>
+                {% endif %}
             {% endfor %}
             {% endif %}
-            <input name="username" type="text" placeholder="Username" required/>
-            <input name="password" type="password" placeholder="Password" required/>
-            <!-- <a href="#">Forgot your password?</a> -->
-            <button type="submit">Sign In</button>
+            
+            <div class="input-group">
+                <input name="username" type="text" placeholder="Username" id="loginUsername" 
+                       autocomplete="username" required/>
+                <span class="error-message" id="loginUsername-error"></span>
+            </div>
+            
+            <div class="input-group">
+                <input name="password" type="password" placeholder="Password" id="loginPassword"
+                       autocomplete="current-password" required/>
+                <span class="error-message" id="loginPassword-error"></span>
+            </div>
+            
+            <button type="submit" id="signInSubmit">Sign In</button>
         </form>
-    </div>
-    <div class="overlay-container">
+    </div>    <div class="overlay-container">
         <div class="overlay">
             <div class="overlay-panel overlay-left">
                 <h1>Welcome Back!</h1>
@@ -62,22 +133,5 @@
     </div>
 </div>
 
-<script src="{{ url_for('static', filename='js/auth.js') }}">
-        document.querySelector("form[action='/auth/register']").addEventListener("submit", function (event) {
-        let fullName = document.querySelector("input[name='first_name']").value.trim();
-        let email = document.querySelector("input[name='email']").value.trim();
-        let password = document.querySelector("input[name='password']").value.trim();
-
-        if (!fullName) {
-            alert("Error! Full Name field cannot be empty.");
-            event.preventDefault();
-        } else if (!email) {
-            alert("Error! Email field cannot be empty.");
-            event.preventDefault();
-        } else if (!password) {
-            alert("Error! Password field cannot be empty.");
-            event.preventDefault();
-        }
-    });
-</script>
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
 {% endblock %}
