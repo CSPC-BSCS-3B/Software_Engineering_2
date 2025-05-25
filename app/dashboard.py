@@ -116,7 +116,7 @@ def index():
     transactions = db.execute(
         "SELECT amount, transaction_type, category_name, transaction_date FROM transactions t JOIN accounts a ON t.account_id = a.id JOIN categories c ON t.category_id = c.id WHERE a.user_id = ? ORDER BY transaction_date DESC",
         (g.user["id"],),
-    ).fetchmany(3)
+    ).fetchmany(5)
 
     bills = db.execute(
         "SELECT bill_name, amount, due_date FROM bills b JOIN accounts a ON b.account_id = a.id WHERE a.user_id = ?",
